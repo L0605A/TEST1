@@ -3,10 +3,10 @@ using Microsoft.Data.SqlClient;
 
 namespace ExampleTest1.Repositories;
 
-public class Repository : IRepository
+public class BooksRepository : IBooksRepository
 {
     private readonly IConfiguration _configuration;
-    public Repository(IConfiguration configuration)
+    public BooksRepository(IConfiguration configuration)
     {
         _configuration = configuration;
     }

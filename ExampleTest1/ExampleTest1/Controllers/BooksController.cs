@@ -8,12 +8,12 @@ namespace ExampleTest1.Controllers
 {
     [Route("api/books")]
     [ApiController]
-    public class Controller : ControllerBase
+    public class BooksController : ControllerBase
     {
-        private readonly IRepository _booksRepository;
-        public Controller(IRepository booksRepository)
+        private readonly IBooksRepository _booksBooksRepository;
+        public BooksController(IBooksRepository booksBooksRepository)
         {
-            _booksRepository = booksRepository;
+            _booksBooksRepository = booksBooksRepository;
         }
         
         [HttpGet("{id}/genres")]
@@ -21,11 +21,11 @@ namespace ExampleTest1.Controllers
         public async Task<IActionResult> GetBook(int id)
         {
             //Check for the validity
-            if (!await _booksRepository.BookExists(id))
+            if (!await _booksBooksRepository.BookExists(id))
                 return NotFound($"Book with given ID - {id} doesn't exist");
 
             //Get the data
-            var book = await _booksRepository.BookGet(id);
+            var book = await _booksBooksRepository.BookGet(id);
             
             return Ok(book);
         }
@@ -39,7 +39,7 @@ namespace ExampleTest1.Controllers
             //You can check existance in loops
             foreach (var genre in bookWithGenres.Genres)
             {
-                if (!await _booksRepository.GenreExists(genre))
+                if (!await _booksBooksRepository.GenreExists(genre))
                     return NotFound($"Genre with given ID - {genre} doesn't exist");
             }
 
@@ -48,14 +48,14 @@ namespace ExampleTest1.Controllers
             //Use transaction for rollback
             using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var id = await _booksRepository.BookAdd(bookWithGenres.Title);
+                var id = await _booksBooksRepository.BookAdd(bookWithGenres.Title);
 
                 foreach (var genre in bookWithGenres.Genres)
                 {
-                    await _booksRepository.BookGenreAdd(id, genre);
+                    await _booksBooksRepository.BookGenreAdd(id, genre);
                 }
                 
-                book = await _booksRepository.BookGet(id);
+                book = await _booksBooksRepository.BookGet(id);
                 
                 scope.Complete();
             }

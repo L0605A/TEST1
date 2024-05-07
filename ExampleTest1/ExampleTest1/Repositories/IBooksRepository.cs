@@ -2,7 +2,7 @@
 
 namespace ExampleTest1.Repositories;
 
-public interface IRepository
+public interface IBooksRepository
 {
     //Task<Return_Type> TaskName(Argument_Type argument_Name);
 

@@ -8,7 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IBooksRepository, BooksRepository>();
 
 var app = builder.Build();
 
